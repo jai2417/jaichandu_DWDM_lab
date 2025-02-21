@@ -1,0 +1,23 @@
+library(arules)
+
+transactions_list <- list(
+  c("a", "d", "e"),
+  c("a", "b", "c", "e"),
+  c("a", "b", "d", "e"),
+  c("a", "c", "d", "e"),
+  c("b", "c", "e"),
+  c("b", "d", "e"),
+  c("c", "d"),
+  c("a", "b", "c"),
+  c("a", "d", "e"),
+  c("a", "b", "e")
+)
+transactions <- as(transactions_list, "transactions")
+
+summary(transactions)
+
+rules <- apriori(transactions, 
+                 parameter = list(supp = 3/10, conf = 0.5, target="rules"))
+
+inspect(sort(rules, by="confidence"))
+
